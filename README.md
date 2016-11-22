@@ -1,6 +1,6 @@
-# datenmanager
+# VisualCSV - Manage your CSVs with a nicer visual interface.
 
-> An electron-vue project
+> An electron-vue project to visualize CSV stuff.
 
 ## Build Setup
 
