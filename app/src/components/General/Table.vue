@@ -1,5 +1,5 @@
 <style scoped>
-table {
+/*table {
   border: 2px solid #42b983;
   border-radius: 3px;
   background-color: #fff;
@@ -58,44 +58,69 @@ th.active .arrow {
 .md-button-c2a > .md-input-container {
   display: inline-block;
   min-width: 50px;
-}
+}*/
 
 </style>
 <template>
-  <table>
-      <thead>
-        <tr>
-          <th v-for="key in columns"
+<md-table-card>
+  <md-toolbar>
+    <h1 class="md-title">Mitarbeiterverzeichnis</h1>
+    <md-menu>
+      <md-button class="md-icon-button" md-menu-trigger>
+        <md-icon>filter_list</md-icon>
+      </md-button>
+
+      <md-menu-content>
+        <md-menu-item v-for="col in columns">
+          <md-checkbox :id="'toggle-' +  col" name="my-test1" v-model="colVisible[col]">{{col}}</md-checkbox>
+        </md-menu-item>
+        <md-menu-item disabled>
+          <md-input-container>
+            <md-input class="md-raised md-primary" v-model="colName">Test</md-input>
+          </md-input-container>
+          <md-button class="md-fab md-primary md-mini" @click="columnOptions.addColumn(colName)">
+            <md-icon>add</md-icon>
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+
+    <md-input-container md-inline>
+      <md-input  v-model="filterKey"></md-input>
+    </md-input-container>
+    <md-button class="md-icon-button">
+      <md-icon>search</md-icon>
+    </md-button>
+  </md-toolbar>
+  <md-table @sort="sortBy">
+      <md-table-header>
+        <md-table-row>
+          <md-table-head v-for="key in visibleColumns" :md-sort-by="key">
+            {{ key | capitalize }}
+          </md-table-head>
+          <!-- th v-for="key in columns"
             @click="sortBy(key)"
             :class="{ active: sortKey == key }">
             {{ key | capitalize }}
             <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
             </span>
-          </th>
-          <th>
-            <div class="md-button-c2a">
-              <md-input-container>
-                <md-input class="md-raised md-primary" v-model="colName">Test</md-input>
-              </md-input-container>
-              <md-button class="md-fab md-primary md-mini"  @click="columnOptions.addColumn(colName)">
-                <md-icon>add</md-icon>
-              </md-button>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="entry in filteredData">
-          <td v-for="key in columns">
+          </th -->
+          <md-table-head>
+          </md-table-head>
+        </md-table-row>
+      </md-table-header>
+      <md-table-body>
+        <md-table-row v-for="entry in filteredData">
+          <md-table-cell v-for="key in visibleColumns">
             {{entry[key]}}
-          </td>
-          <td v-for="c2a in buttonOptions">
-            <md-button class="md-raised md-primary" @click="c2a.fn(entry)">{{c2a.name}}</md-button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </script>
+          </md-table-cell>
+          <md-table-cell>
+            <md-button  v-for="c2a in buttonOptions" class="md-icon-button" @click="c2a.fn(entry)"><md-icon>{{c2a.name}}</md-icon></md-button>
+          </md-table-cell>
+        </md-table-row>
+      </md-table-body>
+    </md-table>
+  </md-table-card>
 </template>
 
 <script>
@@ -105,22 +130,35 @@ th.active .arrow {
     props: {
       data: Array,
       columns: Array,
-      filterKey: String,
       buttonOptions: Array,
       columnOptions: Object
     },
     data: function () {
       var sortOrders = {}
+      var colVisible = {}
       this.columns.forEach(function (key) {
         sortOrders[key] = 1
+      })
+      this.columns.forEach(function (key) {
+        colVisible[key] = true
       })
       return {
         sortKey: '',
         sortOrders: sortOrders,
-        colName: ''
+        colName: '',
+        colVisible: colVisible,
+        filterKey: ''
       }
     },
     computed: {
+      visibleColumns: function() {
+        var cols = this.columns;
+        var visibles = this.colVisible;
+        return cols.filter((col) => {
+          if(typeof visibles[col] === 'undefined' ) this.$set(this.colVisible, col, true);
+          return visibles[col];
+        })
+      },
       filteredData: function () {
         var sortKey = this.sortKey
         var filterKey = this.filterKey && this.filterKey.toLowerCase()
@@ -149,9 +187,10 @@ th.active .arrow {
       }
     },
     methods: {
-      sortBy: function (key) {
-        this.sortKey = key
-        this.sortOrders[key] = this.sortOrders[key] * -1
+      sortBy: function (sort) {
+        this.sortKey = sort.name
+        if(typeof this.sortOrders[sort.name] === 'undefined') this.$set(this.sortOrders, sort.name, -1);
+        this.sortOrders[sort.name] = this.sortOrders[sort.name] * -1
       }
     }
   }

@@ -14,22 +14,22 @@
     <md-button class="md-raised md-primary" @click="loadSheet()">Datei laden</md-button>
     <md-button class="md-raised md-primary" @click="saveSheet()">Datei speichern</md-button>
     <div class="field-group">
-      <md-input-container>
+      <!-- md-input-container>
         <label for="usedGridColumns">Spalten</label>
         <md-select  v-md-theme="'default'" name="usedGridColumns" id="usedGridColumns" multiple v-model="usedGridColumns">
           <md-option v-for="col in personsProperties" :value="col"> {{col}} </md-option>
         </md-select>
-      </md-input-container>
+      </md-input-container -->
     </div>
     <current-page></current-page>
     <br/>
     <section>
       <vuetable
         :data="personsList"
-        :columns="usedGridColumns"
+        :columns="personsProperties"
         :filter-key="searchQuery"
         :column-options="{addColumn: addColumn, editColumn: editColumn, deleteColumn: deleteColumn}"
-        :button-options="[{name:'Editieren', fn:editPerson},{name:'Löschen', fn:deletePerson}]">
+        :button-options="[{name:'edit', fn:editPerson},{name:'delete', fn:deletePerson}]">
       </vuetable>
     </section>
   </div>

@@ -9,6 +9,7 @@ import Router from 'vue-router'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 import "roboto-fontface/css/roboto/roboto-fontface.css";
+import "material-design-icons/iconfont/material-icons.css"
 import "material-icons/css/material-icons.css";
 
 import App from './App'
