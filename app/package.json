@@ -1,0 +1,20 @@
+{
+  "name": "datenmanager",
+  "version": "0.0.0",
+  "description": "An electron-vue project",
+  "main": "electron.js",
+  "dependencies": {
+    "roboto-fontface": "^0.6.0",
+    "sqlite": "^2.2.3",
+    "sqlite3": "^3.1.8",
+    "vue": "^2.0.1",
+    "vue-electron": "^1.0.0",
+    "vue-material": "^0.3.3",
+    "vue-material-components": "^0.3.4",
+    "vue-resource": "^1.0.3",
+    "vue-router": "^2.0.0",
+    "vuex": "^2.0.0"
+  },
+  "devDependencies": {},
+  "author": "Sergej Kasper <sergejkasper@gmail.com>"
+}
