@@ -12,8 +12,8 @@
     background:
       radial-gradient(
         ellipse at center,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(229, 229, 229, .85) 100%
+        rgba(204, 223, 133, 0.5) 0%,
+        rgba(248, 245, 236, .85) 100%
       );
     background-position: center;
     display: flex;

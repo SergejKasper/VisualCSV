@@ -8,7 +8,7 @@
 <template>
   <div>
     <img src="./Persons/assets/logo.png" alt="electron-vue">
-    <h1>Welcome.</h1>
+    <br/>
     <br/>
     <section>
       <form novalidate @submit.stop.prevent="submit">
@@ -18,8 +18,8 @@
           <md-input v-model="person[key]"></md-input>
         </md-input-container>
         </div>
+        <router-link to="/foo" tag="div"><md-button class="md-raised md-primary">Zurück</md-button></router-link>
       </form>
-      <router-link to="/foo" tag="div"><md-button class="md-raised md-primary">Zurück</md-button></router-link>
     </section>
   </div>
 </template>

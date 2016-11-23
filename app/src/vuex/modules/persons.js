@@ -30,22 +30,24 @@ const mutations = {
      alert("Die Spalte " + propName + "gibt es schon.")
      return;
    }
-   Object.keys(state.list).map((key) => {
+   Vue.set(state, 'list', Object.keys(state.list).map((key) => {
         state.list[key][propName] = "";
-   });
+        return state.list[key];
+   }));
    Vue.set(state, 'properties', Object.keys(state.list[0]));
  },
- [types.CHANGE_PROPERTY_PERSON](state, propNameNew, propNameOld){
+ [types.CHANGE_PROPERTY_PERSON](state, [propNameNew, propNameOld]){
    Object.keys(state.list).map((key) => {
-        state.list[key][propNameNew] = state.list[key][propNameOld];
-        delete state.list[key][propNameOld];
+        Vue.set(state.list[key], propNameNew, state.list[key][propNameOld]);
+        Vue.delete(state.list[key], propNameOld);
+        return state.list[key];
    });
    Vue.set(state, 'properties', Object.keys(state.list[0]));
  },
  [types.DELETE_PROPERTY_PERSON](state, propName){
-   Vue.set(state, 'list', state.list.map((person) => {
-     delete person[propNameOld];
-     return person;
+   Vue.set(state, 'list', Object.keys(state.list).map((key) => {
+     delete state.list[key][propName];
+     return state.list[key];
    }));
    Vue.set(state, 'properties', Object.keys(state.list[0]));
  },

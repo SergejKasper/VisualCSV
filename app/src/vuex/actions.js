@@ -24,9 +24,10 @@ export const setPersons =  ({ commit }, persons) => {
 export const addPropertyPerson =  ({ commit }, newProp) => {
   commit(types.ADD_PROPERTY_PERSON, newProp)
 }
-export const changePropertyPerson =  ({ commit }, newProp, oldProp) => {
-  commit(types.CHANGE_PROPERTY_PERSON, newProp, oldProp)
+export const changePropertyPerson =  ({ commit }, [newProp, oldProp]) => {
+  debugger;
+  commit(types.CHANGE_PROPERTY_PERSON, [newProp, oldProp])
 }
 export const deletePropertyPerson =  ({ commit }, prop) => {
-  commit(types.DELETE_PROPERTY_PERSON, props)
+  commit(types.DELETE_PROPERTY_PERSON, prop)
 }

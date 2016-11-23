@@ -1,4 +1,4 @@
-<style scoped>
+<style>
 /*table {
   border: 2px solid #42b983;
   border-radius: 3px;
@@ -59,24 +59,37 @@ th.active .arrow {
   display: inline-block;
   min-width: 50px;
 }*/
-
+.md-menu-col{
+  min-width: 50%;
+}
+.md-table .md-table-head-text{
+  overflow: visible;
+}
+.md-table-edit {
+  min-width: 50px;
+}
 </style>
 <template>
 <md-table-card>
   <md-toolbar>
-    <h1 class="md-title">Mitarbeiterverzeichnis</h1>
-    <md-menu>
+    <h1 class="md-title" v-text="sheetName"></h1>
+    <md-menu md-size="5">
       <md-button class="md-icon-button" md-menu-trigger>
         <md-icon>filter_list</md-icon>
       </md-button>
 
       <md-menu-content>
         <md-menu-item v-for="col in columns">
-          <md-checkbox :id="'toggle-' +  col" name="my-test1" v-model="colVisible[col]">{{col}}</md-checkbox>
+          <div class="md-menu-col">
+            <md-checkbox :id="'toggle-' +  col" name="my-test1" v-model="colVisible[col]">{{col}}</md-checkbox>
+          </div>
+          <md-button class="md-fab md-primary md-mini" @click="columnOptions.deleteColumn(col)">
+            <md-icon>delete</md-icon>
+          </md-button>
         </md-menu-item>
         <md-menu-item disabled>
           <md-input-container>
-            <md-input class="md-raised md-primary" v-model="colName">Test</md-input>
+            <md-input class="md-raised md-primary" v-model="colName" placeholder="Neue Spalte"></md-input>
           </md-input-container>
           <md-button class="md-fab md-primary md-mini" @click="columnOptions.addColumn(colName)">
             <md-icon>add</md-icon>
@@ -86,17 +99,20 @@ th.active .arrow {
     </md-menu>
 
     <md-input-container md-inline>
-      <md-input  v-model="filterKey"></md-input>
+      <md-input  v-model="filterKey" placeholder="Suchfilter"></md-input>
     </md-input-container>
-    <md-button class="md-icon-button">
-      <md-icon>search</md-icon>
-    </md-button>
   </md-toolbar>
   <md-table @sort="sortBy">
       <md-table-header>
         <md-table-row>
-          <md-table-head v-for="key in visibleColumns" :md-sort-by="key">
-            {{ key | capitalize }}
+          <md-table-head v-for="(value, key) in visibleColumns" :md-sort-by="value">
+
+            <md-table-edit
+            :md-name="'comment' + key"
+            :md-id="'comment' + key"
+            :md-placeholder="value"
+            md-maxlength="12"
+            v-on:input="columnOptions.editColumn($event, value)">{{ value | capitalize }}</md-table-edit>
           </md-table-head>
           <!-- th v-for="key in columns"
             @click="sortBy(key)"
@@ -131,7 +147,8 @@ th.active .arrow {
       data: Array,
       columns: Array,
       buttonOptions: Array,
-      columnOptions: Object
+      columnOptions: Object,
+      sheetName: String
     },
     data: function () {
       var sortOrders = {}

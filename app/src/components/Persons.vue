@@ -8,7 +8,8 @@
 <template>
   <div>
     <img src="./Persons/assets/logo.png" alt="electron-vue">
-    <h1>Willkommen</h1>
+    <br>
+    <br>
     <!-- md-input type="text" name="name" value=""></md-input -->
     <input id="csvInput" type="file" v-on:change="xslFileLoad" hidden>
     <md-button class="md-raised md-primary" @click="loadSheet()">Datei laden</md-button>
@@ -25,6 +26,7 @@
     <br/>
     <section>
       <vuetable
+        :sheet-name="sheetName"
         :data="personsList"
         :columns="personsProperties"
         :filter-key="searchQuery"
@@ -55,6 +57,7 @@ import fs from 'fs'
     },
     data(){
       return {
+        sheetName: '',
         searchQuery: '',
         usedGridColumns: ['Name']
       }
@@ -69,8 +72,8 @@ import fs from 'fs'
       addColumn: function(colName){
         this.addPropertyPerson(colName);
       },
-      changeColumn: function(colNameNew, colNameOld){
-        this.changePropertyPerson(colNameNew, colNameOld);
+      editColumn: function(colNameNew, colNameOld){
+        this.changePropertyPerson([colNameNew, colNameOld]);
       },
       deleteColumn: function(colName){
         this.deletePropertyPerson(colName);
@@ -84,6 +87,7 @@ import fs from 'fs'
             } else {
                var pers = CsvParse(data, {columns: true, delimiter: ','});
                console.log(pers);
+               this.sheetName = files[0].name;
                this.setPersons(pers);
             }
         });
