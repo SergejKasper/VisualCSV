@@ -1,6 +1,10 @@
 # VisualCSV - Manage your CSVs with a nicer visual interface.
 
-> An electron-vue project to visualize CSV stuff.
+> An electron-vue project to easily visualize, search and edit CSV file-contents (for all those who find excel to technical ;) ).
+
+Check out a preview at [vimeo](https://vimeo.com/203987286)! 
+
+[![VisualCSV](https://gifs.com/gif/k5lM6Y)](https://vimeo.com/203987286)
 
 ## Build Setup
 
