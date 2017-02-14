@@ -2,9 +2,9 @@
 
 > An electron-vue project to easily visualize, search and edit CSV file-contents (for all those who find excel to technical ;) ).
 
-Check out a preview at [vimeo](https://vimeo.com/203987286)! 
+Check out a full preview at [vimeo](https://vimeo.com/203987286)! 
 
-[![VisualCSV](https://gifs.com/gif/k5lM6Y)](https://vimeo.com/203987286)
+[![VisualCSV](https://j.gifs.com/k5lM6Y.gif)](https://vimeo.com/203987286)
 
 ## Build Setup
 
