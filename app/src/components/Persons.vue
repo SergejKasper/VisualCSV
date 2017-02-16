@@ -13,7 +13,7 @@
     <!-- md-input type="text" name="name" value=""></md-input -->
     <input id="csvInput" type="file" v-on:change="xslFileLoad" hidden>
     <md-button class="md-raised md-primary" @click="loadSheet()">Datei laden</md-button>
-    <md-button class="md-raised md-primary" @click="saveSheet()">Datei speichern</md-button>
+    <md-button class="md-raised md-primary" @click="saveSheet()" v-if="Object.keys(personsList).length !== 0">Datei speichern</md-button>
     <div class="field-group">
       <!-- md-input-container>
         <label for="usedGridColumns">Spalten</label>
@@ -25,12 +25,12 @@
     <current-page></current-page>
     <br/>
     <section>
-      <vuetable
+      <vuetable v-if="Object.keys(personsList).length !== 0"
         :sheet-name="sheetName"
         :data="personsList"
         :columns="personsProperties"
         :filter-key="searchQuery"
-        :column-options="{addColumn: addColumn, editColumn: editColumn, deleteColumn: deleteColumn}"
+        :column-options="{addColumn: addColumn, editColumn: editColumn, deleteColumn: deleteColumn, addRow: addRow}"
         :button-options="[{name:'edit', fn:editPerson},{name:'delete', fn:deletePerson}]">
       </vuetable>
     </section>
@@ -112,6 +112,13 @@ import fs from 'fs'
       },
       editPerson: function(person) {
        this.$router.push("/person/" + person.id);
+     }, addRow: function () {
+       let person = {};
+       this.personsProperties.map(function functionName(prop) {
+         person[prop] = '';
+       })
+       this.createPerson(person);
+       this.$router.push("/person/" + (this.personsList.length -1));
      }, ...mapActions([
          'deletePerson',
          'createPerson',

@@ -9,21 +9,18 @@
 
   body {
     align-items: center;
-    background:
-      radial-gradient(
-        ellipse at center,
-        rgba(204, 223, 133, 0.5) 0%,
-        rgba(248, 245, 236, .85) 100%
-      );
     background-position: center;
     display: flex;
     font-family: Roboto, Helvetica, sans-serif;
     justify-content: center;
     text-align: center;
   }
+  #app {
+    background: #f8f5ec;
+  }
 </style>
 
-<template v-md-theme="'default'">
+<template v-md-theme="'default'" >
   <div>
     <router-view></router-view>
   </div>

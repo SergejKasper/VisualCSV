@@ -3,19 +3,15 @@ import Vue from 'vue';
 
 const state = {
   list: {
-      0: { Name: 'Friedhelm Appel', Alter: 30 },
-      1: { Name: 'Beat Abry', Alter: 40},
-      2: { Name: 'Josef Drazil', Alter: 20},
-      3: { Name: 'Werner Gitt', Alter: 55 }
     },
-  properties: ['Name', 'Alter'],
+  properties: [],
   index: 0
 }
 
 
 const mutations = {
  [types.CREATE_PERSON] (state, person) {
-   state.list[getUniqueObjectKey()] = person;
+   Vue.set(state.list, state.index ++, person);
  },
  [types.UPDATE_PERSON] (state, oldPerson, newPerson) {
    state.list[person.id] = value;

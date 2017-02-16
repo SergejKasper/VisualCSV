@@ -136,6 +136,9 @@ th.active .arrow {
         </md-table-row>
       </md-table-body>
     </md-table>
+    <md-bottom-bar>
+      <md-bottom-bar-item md-icon="add"  @click="columnOptions.addRow()" md-active>Neue Zeile hinzufügen</md-bottom-bar-item>
+    </md-bottom-bar>
   </md-table-card>
 </template>
 
