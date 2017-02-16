@@ -15,6 +15,11 @@
     justify-content: center;
     text-align: center;
   }
+
+  button.md-icon-button .md-icon{
+    display: inline-block;
+  }
+
   #app {
     background: #f8f5ec;
   }

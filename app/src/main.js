@@ -21,9 +21,9 @@ Vue.use(Electron)
 Vue.use(Resource)
 Vue.use(Router)
 Vue.config.debug = true
-Vue.material.theme.register('default', {
-  primary: 'light-green',
-  accent: 'green'
+Vue.material.registerTheme('default', {
+  primary: 'lime',
+  accent: 'light-green'
 })
 
 const router = new Router({

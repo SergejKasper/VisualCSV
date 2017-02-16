@@ -8,12 +8,13 @@
 <template>
   <div>
     <img src="./Persons/assets/logo.png" alt="electron-vue">
-    <br>
-    <br>
+    <br/>
+    <br/>
     <!-- md-input type="text" name="name" value=""></md-input -->
+
+    <md-button class="md-raised md-primary" v-on:click.native="loadSheet()">Datei laden</md-button>
+    <md-button class="md-raised md-primary" v-on:click.native="saveSheet()" v-if="Object.keys(personsList).length !== 0">Datei speichern</md-button>
     <input id="csvInput" type="file" v-on:change="xslFileLoad" hidden>
-    <md-button class="md-raised md-primary" @click="loadSheet()">Datei laden</md-button>
-    <md-button class="md-raised md-primary" @click="saveSheet()" v-if="Object.keys(personsList).length !== 0">Datei speichern</md-button>
     <div class="field-group">
       <!-- md-input-container>
         <label for="usedGridColumns">Spalten</label>
