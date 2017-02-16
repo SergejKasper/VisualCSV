@@ -22,7 +22,6 @@
         </md-select>
       </md-input-container -->
     </div>
-    <current-page></current-page>
     <br/>
     <section>
       <vuetable v-if="Object.keys(personsList).length !== 0"
@@ -38,12 +37,9 @@
 </template>
 
 <script>
-import CsvParse from 'csv-parse/lib/sync'
-import stringify from 'csv-stringify'
-import fs from 'fs'
-
-  import CurrentPage from './Persons/CurrentPage'
-  import Versions from './Persons/Versions'
+  import CsvParse from 'csv-parse/lib/sync'
+  import stringify from 'csv-stringify'
+  import fs from 'fs'
   import Vuetable from './General/Table'
   import { mapGetters, mapActions, mapMutations } from 'vuex'
   var app = require('electron').remote;
@@ -51,8 +47,6 @@ import fs from 'fs'
 
   export default {
     components: {
-      CurrentPage,
-      Versions,
       Vuetable
     },
     data(){
@@ -94,7 +88,6 @@ import fs from 'fs'
       },
       loadSheet: function(){
         document.getElementById("csvInput").click();
-
       },
       saveSheet: function(){
         dialog.showSaveDialog((fileName) => {
