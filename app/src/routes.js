@@ -1,10 +1,10 @@
 export default [{
     path: '/',
-    name: 'landing-page',
-    component: require('components/Persons')
+    name: 'csv',
+    component: require('components/CSV')
   }, {
-    path: '/person/:id',
-    component: require('components/Person')
+    path: '/row-edit/:id',
+    component: require('components/RowEdit')
   }, {
     path: '*',
     redirect: '/'

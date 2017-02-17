@@ -1,33 +1,25 @@
 import * as types from './mutation-types'
 
-export const decrementMain = ({ commit }) => {
-  commit(types.DECREMENT_MAIN_COUNTER)
+export const createRow = ({ commit }, row) => {
+  commit(types.CREATE_ROW, row)
+}
+export const updateRow = ({ commit }, oldRow, newRow) => {
+  commit(types.UPDATE_ROW, oldRow, newRow)
+}
+export const deleteRow = ({ commit }, row) => {
+  commit(types.DELETE_ROW, row)
 }
 
-export const incrementMain = ({ commit }) => {
-  commit(types.INCREMENT_MAIN_COUNTER)
+export const setRows =  ({ commit }, rows) => {
+  commit(types.SET_ROWS, rows)
 }
-
-export const createPerson = ({ commit }, person) => {
-  commit(types.CREATE_PERSON, person)
+export const addPropertyRow =  ({ commit }, newProp) => {
+  commit(types.ADD_PROPERTY_ROW, newProp)
 }
-export const updatePerson = ({ commit }, oldPerson, newPerson) => {
-  commit(types.UPDATE_PERSON, oldPerson, newPerson)
-}
-export const deletePerson = ({ commit }, person) => {
-  commit(types.DELETE_PERSON, person)
-}
-
-export const setPersons =  ({ commit }, persons) => {
-  commit(types.SET_PERSONS, persons)
-}
-export const addPropertyPerson =  ({ commit }, newProp) => {
-  commit(types.ADD_PROPERTY_PERSON, newProp)
-}
-export const changePropertyPerson =  ({ commit }, [newProp, oldProp]) => {
+export const changePropertyRow =  ({ commit }, [newProp, oldProp]) => {
   debugger;
-  commit(types.CHANGE_PROPERTY_PERSON, [newProp, oldProp])
+  commit(types.CHANGE_PROPERTY_ROW, [newProp, oldProp])
 }
-export const deletePropertyPerson =  ({ commit }, prop) => {
-  commit(types.DELETE_PROPERTY_PERSON, prop)
+export const deletePropertyRow =  ({ commit }, prop) => {
+  commit(types.DELETE_PROPERTY_ROW, prop)
 }

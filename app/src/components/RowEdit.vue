@@ -7,15 +7,15 @@
 
 <template>
   <div>
-    <img src="./Persons/assets/logo.png" alt="electron-vue">
+    <img src="./CSV/assets/logo.png" alt="electron-vue">
     <br/>
     <br/>
     <section>
       <form novalidate @submit.stop.prevent="submit">
-        <div v-for="(value, key) in person" v-if="key != 'id'" class="">
+        <div v-for="(value, key) in row" v-if="key != 'id'" class="">
         <md-input-container>
           <label>{{key}}</label>
-          <md-input v-model="person[key]"></md-input>
+          <md-input v-model="row[key]"></md-input>
         </md-input-container>
         </div>
         <router-link to="/foo" tag="div"><md-button class="md-raised md-primary">Zurück</md-button></router-link>
@@ -33,26 +33,21 @@
     },
     methods: {
     },
-    data(){
-      return {
-        person: {}
-      }
-    },
     ready() {
       this.fetchData()
     },
       computed: {
-      person: function(){
-        return this.personsList[this.$route.params.id];
+      row: function(){
+        return this.rowsList[this.$route.params.id];
       },
       ...mapGetters([
-        'personsList'
+        'rowsList'
       ])
       },
       methods: mapActions([
         'deletePerson',
         'updatePerson'
       ]),
-    name: 'person-page'
+    name: 'row-page'
   }
 </script>

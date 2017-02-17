@@ -7,31 +7,22 @@
 
 <template>
   <div>
-    <img src="./Persons/assets/logo.png" alt="electron-vue">
+    <img src="./CSV/assets/logo.png" alt="electron-vue">
     <br/>
     <br/>
     <!-- md-input type="text" name="name" value=""></md-input -->
-
     <md-button class="md-raised md-primary" v-on:click.native="loadSheet()">Datei laden</md-button>
-    <md-button class="md-raised md-primary" v-on:click.native="saveSheet()" v-if="Object.keys(personsList).length !== 0">Datei speichern</md-button>
+    <md-button class="md-raised md-primary" v-on:click.native="saveSheet()" v-if="Object.keys(rowsList).length !== 0">Datei speichern</md-button>
     <input id="csvInput" type="file" v-on:change="xslFileLoad" hidden>
-    <div class="field-group">
-      <!-- md-input-container>
-        <label for="usedGridColumns">Spalten</label>
-        <md-select  v-md-theme="'default'" name="usedGridColumns" id="usedGridColumns" multiple v-model="usedGridColumns">
-          <md-option v-for="col in personsProperties" :value="col"> {{col}} </md-option>
-        </md-select>
-      </md-input-container -->
-    </div>
     <br/>
     <section>
-      <vuetable v-if="Object.keys(personsList).length !== 0"
+      <vuetable v-if="Object.keys(rowsList).length !== 0"
         :sheet-name="sheetName"
-        :data="personsList"
-        :columns="personsProperties"
+        :data="rowsList"
+        :columns="rowsProperties"
         :filter-key="searchQuery"
         :column-options="{addColumn: addColumn, editColumn: editColumn, deleteColumn: deleteColumn, addRow: addRow}"
-        :button-options="[{name:'edit', fn:editPerson},{name:'delete', fn:deletePerson}]">
+        :button-options="[{name:'edit', fn:editRow},{name:'delete', fn:deleteRow}]">
       </vuetable>
     </section>
   </div>
@@ -59,21 +50,21 @@
     },
       computed: {
         ...mapGetters([
-          'personsList',
-          'personsProperties'
+          'rowsList',
+          'rowsProperties'
         ])
       },
       methods: {
       addColumn: function(colName){
-        this.addPropertyPerson(colName);
+        this.addPropertyRow(colName);
       },
       editColumn: function(colNameNew, colNameOld){
-        this.changePropertyPerson([colNameNew, colNameOld]);
+        this.changePropertyRow([colNameNew, colNameOld]);
       },
       deleteColumn: function(colName, e){
         debugger;
         e.preventDefault();
-        this.deletePropertyPerson(colName);
+        this.deletePropertyRow(colName);
       },
       xslFileLoad: function (event) {
         var files = event.target.files || event.dataTransfer.files;
@@ -85,7 +76,7 @@
                var pers = CsvParse(data, {columns: true, delimiter: ','});
                console.log(pers);
                this.sheetName = files[0].name;
-               this.setPersons(pers);
+               this.setRows(pers);
             }
         });
       },
@@ -98,7 +89,7 @@
                 console.log("You didn't save the file");
                 return;
            }
-           let objectsToSave = stringify([Object.keys(this.personsList['0'])].concat(Object.keys(this.personsList).map((k)=>{return Object.values(this.personsList[k]);})), function(err, output){
+           let objectsToSave = stringify([Object.keys(this.rowsList['0'])].concat(Object.keys(this.rowsList).map((k)=>{return Object.values(this.rowsList[k]);})), function(err, output){
              fs.writeFile(fileName, output, (err) => {
                if (err) throw err;
                console.log('It\'s saved!');
@@ -106,25 +97,24 @@
            });
          });
       },
-      editPerson: function(person) {
-       this.$router.push("/person/" + person.id);
+      editRow: function(row) {
+       this.$router.push("/row-edit/" + row.id);
      }, addRow: function () {
-       let person = {};
-       this.personsProperties.map(function functionName(prop) {
-         person[prop] = '';
+       let row = {};
+       this.rowsProperties.map(function functionName(prop) {
+         row[prop] = '';
        })
-       this.createPerson(person);
-       this.$router.push("/person/" + (this.personsList.length -1));
+       this.createRow(row);
+       this.$router.push("/row-edit/" + (this.rowsList.length -1));
      }, ...mapActions([
-         'deletePerson',
-         'createPerson',
-         'updatePerson',
-         'setPersons',
-         'addPropertyPerson',
-         'changePropertyPerson',
-         'deletePropertyPerson'
+         'deleteRow',
+         'createRow',
+         'setRows',
+         'addPropertyRow',
+         'changePropertyRow',
+         'deletePropertyRow'
        ])
      },
-    name: 'landing-page'
+    name: 'csv'
   }
 </script>

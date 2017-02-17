@@ -10,17 +10,14 @@ const state = {
 
 
 const mutations = {
- [types.CREATE_PERSON] (state, person) {
-   Vue.set(state.list, state.index ++, person);
+  [types.CREATE_ROW] (state, row) {
+    Vue.set(state.list, state.index ++, row);
+  },
+ [types.DELETE_ROW] (state, row) {
+   if(!state.list[row.id]) return;
+   Vue.delete(state.list, row.id)
  },
- [types.UPDATE_PERSON] (state, oldPerson, newPerson) {
-   state.list[person.id] = value;
- },
- [types.DELETE_PERSON] (state, person) {
-   if(!state.list[person.id]) return;
-   Vue.delete(state.list, person.id)
- },
- [types.ADD_PROPERTY_PERSON](state, propName){
+ [types.ADD_PROPERTY_ROW](state, propName){
    if(!propName) return;
    if(state.properties.indexOf(propName) !== -1){
      alert("Die Spalte " + propName + "gibt es schon.")
@@ -32,7 +29,7 @@ const mutations = {
    }));
    Vue.set(state, 'properties', Object.keys(state.list[0]));
  },
- [types.CHANGE_PROPERTY_PERSON](state, [propNameNew, propNameOld]){
+ [types.CHANGE_PROPERTY_ROW](state, [propNameNew, propNameOld]){
    Object.keys(state.list).map((key) => {
         Vue.set(state.list[key], propNameNew, state.list[key][propNameOld]);
         Vue.delete(state.list[key], propNameOld);
@@ -40,21 +37,21 @@ const mutations = {
    });
    Vue.set(state, 'properties', Object.keys(state.list[0]));
  },
- [types.DELETE_PROPERTY_PERSON](state, propName){
+ [types.DELETE_PROPERTY_ROW](state, propName){
    Vue.set(state, 'list', Object.keys(state.list).map((key) => {
      delete state.list[key][propName];
      return state.list[key];
    }));
    Vue.set(state, 'properties', Object.keys(state.list[0]));
  },
- [types.SET_PERSONS] (state, pers) {
+ [types.SET_ROWS] (state, pers) {
    if(!pers) return;
-   var persons = {};
+   var rows = {};
    state.index = 0;
    pers.map((p)=>{
-     persons[state.index ++] = p;
+     rows[state.index ++] = p;
    })
-   Vue.set(state, 'list', persons);
+   Vue.set(state, 'list', rows);
    Vue.set(state, 'properties', Object.keys(state.list[0]));
  }
 }
