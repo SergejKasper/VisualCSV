@@ -70,7 +70,9 @@
       editColumn: function(colNameNew, colNameOld){
         this.changePropertyPerson([colNameNew, colNameOld]);
       },
-      deleteColumn: function(colName){
+      deleteColumn: function(colName, e){
+        debugger;
+        e.preventDefault();
         this.deletePropertyPerson(colName);
       },
       xslFileLoad: function (event) {

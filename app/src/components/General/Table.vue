@@ -64,13 +64,23 @@ th.active .arrow {
 .md-menu-col {
     min-width: 50%;
 }
-
+.md-table-cell{
+  text-align: left;
+}
 .md-table .md-table-head-text {
     overflow: visible;
 }
 
 .md-table-edit {
     min-width: 50px;
+}
+.md-button.md-fab .md-icon {
+  display: inline-block;
+}
+/*As the menu item is disabled to prevent the menu from closing upon interaction,
+we need the pointer events to be enabled agian on the enclosed itemss*/
+.md-list-item-container.md-button{
+  pointer-events: all;
 }
 
 </style>
@@ -86,17 +96,17 @@ th.active .arrow {
             </md-button>
 
             <md-menu-content>
-                <md-menu-item v-for="col in columns">
+                <md-menu-item v-for="col in columns" disabled>
                     <div class="md-menu-col">
                         <md-checkbox :id="'toggle-' +  col" v-model="colVisible[col]">{{col}}</md-checkbox>
                     </div>
-                    <md-button class="md-fab md-primary md-mini" v-on:click="columnOptions.deleteColumn(col)">
+                    <md-button class="md-fab md-primary md-mini" v-on:click.native="columnOptions.deleteColumn(col, $event)">
                         <md-icon>delete</md-icon>
                     </md-button>
                 </md-menu-item>
                 <md-menu-item disabled>
                     <md-input-container>
-                        <md-input class="md-raised md-primary" v-model="colName" placeholder="Neue Spalte" enabled></md-input>
+                        <md-input class="md-raised md-primary" v-model.native="colName" placeholder="Neue Spalte" enabled></md-input>
                     </md-input-container>
                     <div class="md-menu-col" >
                     <md-button class="md-fab md-primary md-mini" v-on:click.native="columnOptions.addColumn(colName)">
@@ -122,13 +132,6 @@ th.active .arrow {
                   md-maxlength="12"
                   v-on:input="columnOptions.editColumn($event, value)">{{ value | capitalize }}</md-table-edit>
                 </md-table-head>
-                <th v-for="key in columns"
-                v-on:click.native="sortBy(key)"
-            :class="{ active: sortKey == key }">
-            {{ key | capitalize }}
-            <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
-            </span>
-          </th>
                 <md-table-head>
                 </md-table-head>
             </md-table-row>
@@ -218,6 +221,10 @@ export default {
         }
     },
     methods: {
+        preventDefault(e){
+          debugger;
+          e.preventDefault()
+        },
         sortBy: function(sort) {
             this.sortKey = sort.name
             if (typeof this.sortOrders[sort.name] === 'undefined') this.$set(this.sortOrders, sort.name, -1);
